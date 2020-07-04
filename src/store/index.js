@@ -5,28 +5,58 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    bankAccountBalance: 0,
+    bankAccount: {
+      balance: null,
+      transaction: [],
+    },
     unvalidDeposit: false,
     unvalidWithdraw: false,
   },
   mutations: {
-    deposit(state, amount) {
-      if (amount >= 0) {
-        state.bankAccountBalance += amount;
+    deposit(state, amountDeposited) {
+      if (amountDeposited >= 0) {
+        const date = new Date();
+        const detailsOfDeposit = {
+          type: 'deposit',
+          dateOfTransaction: date,
+          amount: amountDeposited,
+        };
+        state.bankAccount.transaction.push(detailsOfDeposit);
+        state.bankAccount.balance += amountDeposited;
         state.unvalidDeposit = false;
-      } if (amount < 0) {
+        console.log(state.bankAccount.transaction);
+      }
+      if (amountDeposited < 0) {
         state.unvalidDeposit = true;
       }
     },
-    withdraw(state, amount) {
-      if (amount < 0) {
+    withdraw(state, amountWithdrawn) {
+      if (amountWithdrawn < 0) {
         state.unvalidWithdraw = true;
-      } if (amount > state.bankAccountBalance) {
-        state.unvalidWithdraw = true;
-      } if (amount > 0 && amount <= state.bankAccountBalance) {
-        state.bankAccountBalance -= amount;
-        state.unvalidWithdraw = false;
       }
+      if (amountWithdrawn > state.bankAccount.balance) {
+        state.unvalidWithdraw = true;
+      }
+      if (amountWithdrawn > 0 && amountWithdrawn <= state.bankAccount.balance) {
+        state.bankAccount.balance -= amountWithdrawn;
+        state.unvalidWithdraw = false;
+        const date = new Date();
+        const detailsOfWithdraw = {
+          type: 'withdraw',
+          dateOfTransaction: date,
+          amount: (-amountWithdrawn),
+        };
+        state.bankAccount.transaction.push(detailsOfWithdraw);
+        console.log(state.bankAccount.transaction);
+      }
+    },
+    balance(state) {
+      const reducer = function (accumulator, currentValue) {
+        return accumulator + currentValue.amount;
+      };
+      const balance = state.bankAccount.transaction.reduce(reducer, 0);
+      console.log(balance);
+      state.bankAccount.balance = balance;
     },
   },
 });

@@ -53,5 +53,6 @@ export default {
 .deposit {
     position: relative;
     top: 15px;
+    width: auto;
 }
 </style>

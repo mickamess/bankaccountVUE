@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     accountBalance() {
-      return this.$store.state.bankAccountBalance;
+      return this.$store.state.bankAccount.balance;
     },
   },
 };

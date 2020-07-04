@@ -3,6 +3,7 @@
     <Menu/>
     <Depot/>
     <Withdraw/>
+    <History/>
   </div>
 </template>
 
@@ -10,11 +11,12 @@
 import Menu from './components/Menu.vue';
 import Depot from './components/Depot.vue';
 import Withdraw from './components/Withdraw.vue';
+import History from './components/History.vue';
 
 export default {
   name: 'App',
   components: {
-    Menu, Depot, Withdraw,
+    Menu, Depot, Withdraw, History,
   },
 };
 </script>
@@ -26,6 +28,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  width: auto;
 }
 </style>
