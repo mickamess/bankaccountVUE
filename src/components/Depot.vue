@@ -1,16 +1,21 @@
 <template>
-<div class="deposit"> make a deposit !
-<label for="amount"> what is your amount ? </label>
-<input v-model.number="amountDeposited" type="number" id="amout">
-<span @click="makeDeposit" class="makeDeposit">valider dépot</span>
-<span v-if="isDepositUnvalid" class="depositValid"> !! montant saisi incorrect !! </span>
+<div>
+  <div class="deposit"> make a deposit !
+  <label for="amount"> what is your amount ? </label>
+  <input v-model.number="amountDeposited" type="number" id="amout">
+  <span @click="makeDeposit" class="makeDeposit">valider dépot</span>
+  <span v-if="isDepositUnvalid" class="depositValid"> !! montant saisi incorrect !! </span>
+  </div>
+  <Balance/>
 </div>
 </template>
 
 <script>
+import Balance from './shared/Balance.vue';
 
 export default {
   name: 'Depot',
+  components: { Balance },
   data() {
     return {
       amountDeposited: 0,
@@ -37,7 +42,8 @@ export default {
 }
 .makeDeposit {
     position: relative;
-    left: 5px;
+    margin-left: auto;
+    margin-right: auto;
     width: auto;
     color: black;
     border: 1px solid red;
@@ -52,7 +58,8 @@ export default {
 }
 .deposit {
     position: relative;
-    top: 15px;
-    width: auto;
+    margin-right: auto;
+    margin-left: auto;
+    top: 100px;
 }
 </style>

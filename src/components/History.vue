@@ -1,4 +1,5 @@
 <template>
+<div>
     <table class="history">
         <thead>
             <tr>
@@ -20,11 +21,18 @@
             </tr>
         </tbody>
     </table>
+    <div class="displayBalance">
+    <balance/>
+    </div>
+</div>
 </template>
 
 <script>
+import Balance from './shared/Balance.vue';
+
 export default {
   name: 'History',
+  components: { Balance },
   computed: {
     transaction() {
       return this.$store.state.bankAccount.transaction;
@@ -33,6 +41,10 @@ export default {
 };
 </script>
 <style scoped>
+  .displayBalance {
+      position: absolute;
+      right: 140px;
+  }
   .history {
       border: solid 2px black;
       margin-right: auto;

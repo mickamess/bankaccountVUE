@@ -1,16 +1,21 @@
 <template>
+<div>
 <div class="withdraw"> withdraw some money !
 <label for="amount"> what is your amount ? </label>
 <input v-model.number="amountWithdraw" type="number" id="amout">
 <span @click="makeWithdraw" class="makeWithdraw">valider retrait</span>
 <span v-if="isWithdrawUnvalid" class="withdrawUnvalid"> !! montant saisi incorrect !! </span>
 </div>
+<Balance/>
+</div>
 </template>
 
 <script>
+import Balance from './shared/Balance.vue';
 
 export default {
   name: 'Retrait',
+  components: { Balance },
   data() {
     return {
       amountWithdraw: 0,
@@ -37,7 +42,8 @@ export default {
 }
 .makeWithdraw {
     position: relative;
-    left: 5px;
+    margin-left: auto;
+    margin-right: auto;
     width: auto;
     color: black;
     border: 1px solid red;
@@ -52,6 +58,8 @@ export default {
 }
 .withdraw {
     position: relative;
-    top: 40px;
+    margin-right: auto;
+    margin-left:auto;
+    top: 100px;
 }
 </style>
