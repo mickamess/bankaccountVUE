@@ -3,19 +3,21 @@
     <table class="history">
         <thead>
             <tr>
-                <th class="tableTitle">Historique des opérations</th>
+                <td class="tableTitle">date de l'operation</td>
+                <td class="tableTitle">type d'operation</td>
+                <td class="tableTitle">montant</td>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(operation, index) in transaction" :key="index">
                 <td class="operationDate">
-                    {{ operation.dateOfTransaction }}
+                    {{ operation.dateOfTransaction | date }}
                 </td>
                 <td class="operationType">
-                    {{ operation.type}}
+                    {{ operation.type }}
                 </td>
                 <td class="operationAmount">
-                    {{ operation.amount}} €
+                    {{ operation.amount | currency }}
                 </td>
 
             </tr>
@@ -29,9 +31,15 @@
 
 <script>
 import Balance from './shared/Balance.vue';
+import dateFormat from './shared/dateFormat';
+import currencyFilter from './shared/currencyFilter';
 
 export default {
   name: 'History',
+  filters: {
+    currency: currencyFilter,
+    date: dateFormat,
+  },
   components: { Balance },
   computed: {
     transaction() {
@@ -54,17 +62,15 @@ export default {
   }
   .tableTitle {
       text-align: center;
-      width: 300px;
-      width: 500px;
+      font-weight: bold;
   }
   .operationDate, .operationType, .operationAmount {
     padding: 5px;
     border-bottom: solid 1px grey;
   }
   .operationDate {
-    text-align: left;
+    text-align: center;
     padding: 5px;
-    width: 150px;
   }
   .operationType {
     text-align: center;

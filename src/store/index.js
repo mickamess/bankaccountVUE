@@ -19,7 +19,7 @@ export default new Vuex.Store({
         const detailsOfDeposit = {
           type: 'deposit',
           dateOfTransaction: date,
-          amount: amountDeposited,
+          amount: amountDeposited.toFixed(2),
         };
         state.bankAccount.transaction.push(detailsOfDeposit);
         state.bankAccount.balance += amountDeposited;
@@ -44,16 +44,14 @@ export default new Vuex.Store({
         const detailsOfWithdraw = {
           type: 'withdraw',
           dateOfTransaction: date,
-          amount: (-amountWithdrawn),
+          amount: (-amountWithdrawn).toFixed(2),
         };
         state.bankAccount.transaction.push(detailsOfWithdraw);
         console.log(state.bankAccount.transaction);
       }
     },
     balance(state) {
-      const reducer = function (accumulator, currentValue) {
-        return accumulator + currentValue.amount;
-      };
+      const reducer = (accumulator, currentValue) => accumulator + currentValue.amount;
       const balance = state.bankAccount.transaction.reduce(reducer, 0);
       console.log(balance);
       state.bankAccount.balance = balance;
