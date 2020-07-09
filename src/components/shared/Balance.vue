@@ -1,7 +1,8 @@
 <template>
   <div class="nav">
     <div class="accountBalance">
-balance de votre compte : {{ accountBalance | currency }}
+Balance de votre compte : {{ accountBalance | currency }} <br>
+<span v-if="isOverdraft"> Facilité de caisse restante {{ AmountOverdraft | currency }}</span>
 </div>
   </div>
 </template>
@@ -15,6 +16,12 @@ export default {
   computed: {
     accountBalance() {
       return this.$store.state.bankAccount.balance;
+    },
+    isOverdraft() {
+      return this.$store.state.bankAccount.decouvert;
+    },
+    AmountOverdraft() {
+      return this.$store.state.bankAccount.decouvertAutorisé;
     },
   },
 };

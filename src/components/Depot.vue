@@ -1,12 +1,15 @@
 <template>
 <div>
-  <div class="deposit"> make a deposit !
-  <label for="amount"> what is your amount ? </label>
+  <div class="deposit"> Faites un dépot :
+  <label for="amount"> Quel montant souhaitez-vous déposer ? </label>
   <input v-model.number="amountDeposited" type="number" id="amout">
   <span @click="makeDeposit" class="makeDeposit">valider dépot</span>
-  <span v-if="isDepositUnvalid" class="depositValid"> !! montant saisi incorrect !! </span>
   </div>
   <Balance/>
+  <div>
+    <span v-if="isDepositUnvalid" class="negativeAmount">
+       !! Vous avez saisi un montant négatif !! </span>
+  </div>
 </div>
 </template>
 
@@ -61,5 +64,13 @@ export default {
     margin-right: auto;
     margin-left: auto;
     top: 100px;
+}
+.negativeAmount {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50em;
+    top: 100px;
+    color: red;
 }
 </style>

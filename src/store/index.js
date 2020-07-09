@@ -8,6 +8,8 @@ export default new Vuex.Store({
     bankAccount: {
       balance: null,
       transaction: [],
+      decouvert: false,
+      decouvertAutorisé: null,
     },
     unvalidDeposit: false,
     unvalidWithdraw: false,
@@ -27,15 +29,35 @@ export default new Vuex.Store({
         console.log(state.bankAccount.transaction);
       }
       if (amountDeposited < 0) {
-        state.unvalidDeposit = true;
+        state.unvalidDeposit = 'negativeAmount';
       }
     },
     withdraw(state, amountWithdrawn) {
+      const newBalance = state.bankAccount.balance - amountWithdrawn;
       if (amountWithdrawn < 0) {
-        state.unvalidWithdraw = true;
+        state.unvalidWithdraw = 'negativeAmount';
       }
-      if (amountWithdrawn > state.bankAccount.balance) {
-        state.unvalidWithdraw = true;
+      if (amountWithdrawn > state.bankAccount.balance && state.bankAccount.decouvert === false) {
+        state.unvalidWithdraw = 'amount>balance';
+      }
+      if (amountWithdrawn > state.bankAccount.balance && state.bankAccount.decouvert === true
+        && newBalance < state.bankAccount.decouvertAutorisé) {
+        state.unvalidWithdraw = 'notEnaughOverdraft';
+        console.log(state.unvalidWithdraw);
+        console.log(newBalance);
+      }
+      if (amountWithdrawn > state.bankAccount.balance && state.bankAccount.decouvert === true
+        && newBalance >= state.bankAccount.decouvertAutorisé) {
+        state.bankAccount.balance -= amountWithdrawn;
+        state.unvalidWithdraw = false;
+        const date = new Date();
+        const detailsOfWithdraw = {
+          type: 'withdraw',
+          dateOfTransaction: date,
+          amount: (-amountWithdrawn).toFixed(2),
+        };
+        state.bankAccount.transaction.push(detailsOfWithdraw);
+        console.log(newBalance);
       }
       if (amountWithdrawn > 0 && amountWithdrawn <= state.bankAccount.balance) {
         state.bankAccount.balance -= amountWithdrawn;
